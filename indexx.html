@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Data</title>
+    <style>
+        body {
+            background-color: rgb(106, 145, 70);
+            padding: auto;
+            margin: auto;
+        }
+        form {
+            border: 2px solid rgb(67, 97, 39);
+            border-radius: 5px;
+        }
+        
+        .formularz{
+            text-align: center;
+            color: rgb(23, 44, 4);
+           
+        }
+
+        #output {
+            text-align: center;
+            color: rgb(23, 44, 4);
+        }
+    </style>
+</head>
+<body>
+
+    <form>
+        <div class="formularz">
+        <p>wybierz date 1:</p>
+        <input type="date" id="date1"><br><br>
+    </div>
+
+        <div class="formularz">
+        <p>wybierz date 2:</p>
+        <input type="date" id="date2"><br><br>
+    </div>
+    </form>
+
+    <div id="output"></div>
+
+    <script>
+       const input1 = document.getElementById("date1");
+    const input2 = document.getElementById("date2");
+    const output = document.getElementById("output");
+
+    input1.addEventListener("change", showDates);
+    input2.addEventListener("change", showDates);
+
+    function showDates() {
+        if (input1.value && input2.value) {
+            const dateA = new Date(input1.value);
+            const dateB = new Date(input2.value);
+
+            const options = {
+                day: "2-digit",
+                weekday: "long",
+                month: "long",
+                year: "numeric"
+            };
+
+            const changedA = dateA.toLocaleString("pl-PL", options);
+            const changedB = dateB.toLocaleString("pl-PL", options);
+
+            const diffMilliseconds = dateB - dateA;
+            const diffDays = (diffMilliseconds / (1000 * 60 * 60 * 24));
+
+            output.innerHTML = "Pierwsza data: " + changedA + "<br>";
+            output.innerHTML += "Druga data: " + changedB + "<br><br>";
+
+            if (diffDays === 0) {
+                output.innerHTML += " daty sa takie same — <br>";
+            } else if (diffDays < 0) {
+                output.innerHTML += " blad: pierwsza data jest pozniej niż druga <br>";
+            } else {
+                output.innerHTML += "roznica: " + parseInt(diffDays) + " dni";
+            }
+        }
+    }
+    </script>
+</body>
+</html>
